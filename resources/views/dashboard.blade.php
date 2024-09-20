@@ -40,152 +40,235 @@
       </header>
 
       <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <dl class="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
+        <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div class="flex flex-col rounded-lg border border-gray-200 px-4 py-8 text-center">
             <dt class="order-last text-lg font-medium text-gray-500">New</dt>
-      
-            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">$4.8m</dd>
+            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">13</dd>
           </div>
-      
+
           <div class="flex flex-col rounded-lg border border-gray-200 px-4 py-8 text-center">
             <dt class="order-last text-lg font-medium text-gray-500">In Progress</dt>
-      
             <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">24</dd>
           </div>
       
           <div class="flex flex-col rounded-lg border border-gray-200 px-4 py-8 text-center">
             <dt class="order-last text-lg font-medium text-gray-500">Under Review</dt>
-      
             <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">86</dd>
           </div>
       
           <div class="flex flex-col rounded-lg border border-gray-200 px-4 py-8 text-center">
             <dt class="order-last text-lg font-medium text-gray-500">Completed</dt>
-      
-            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">86k</dd>
+            <dd class="text-4xl font-extrabold text-blue-600 md:text-5xl">18</dd>
           </div>
         </dl>
       </div>
+      
+      <div class="mx-auto max-w-screen-xl px-4 sm:px-6">
+        <div class="my-2 flex sm:flex-row flex-col">
+            <div class="flex flex-row mb-1 sm:mb-0">
+                <div class="relative">
+                    <select
+                        class="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                        <option>All</option>
+                        <option>New</option>
+                        <option>In Progress</option>
+                        <option>Under Review</option>
+                        <option>Completed</option>
+                    </select>
+                    <div
+                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="relative">
+                    <select
+                        class="h-full rounded-r border-t sm:rounded-r-none border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
+                        <option>Sort By Category</option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                    <div
+                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+            <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                <table class="min-w-full leading-normal">
+                    <thead>
+                        <tr>
+                            <th
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                User
+                            </th>
+                            <th
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Rol
+                            </th>
+                            <th
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Created at
+                            </th>
+                            <th
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 w-10 h-10">
+                                        <img class="w-full h-full rounded-full"
+                                            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+                                            alt="" />
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                            Vera Carpenter
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">Admin</p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    Jan 21, 2020
+                                </p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <span
+                                    class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                    <span aria-hidden
+                                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                    <span class="relative">Activo</span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 w-10 h-10">
+                                        <img class="w-full h-full rounded-full"
+                                            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+                                            alt="" />
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                            Blake Bowman
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">Editor</p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    Jan 01, 2020
+                                </p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <span
+                                    class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                    <span aria-hidden
+                                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                    <span class="relative">Activo</span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 w-10 h-10">
+                                        <img class="w-full h-full rounded-full"
+                                            src="https://images.unsplash.com/photo-1540845511934-7721dd7adec3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+                                            alt="" />
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                            Dana Moore
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">Editor</p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    Jan 10, 2020
+                                </p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <span
+                                    class="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight">
+                                    <span aria-hidden
+                                        class="absolute inset-0 bg-orange-200 opacity-50 rounded-full"></span>
+                                    <span class="relative">Suspended</span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-5 bg-white text-sm">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 w-10 h-10">
+                                        <img class="w-full h-full rounded-full"
+                                            src="https://images.unsplash.com/photo-1522609925277-66fea332c575?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&h=160&w=160&q=80"
+                                            alt="" />
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                            Alonzo Cox
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-5 py-5 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">Admin</p>
+                            </td>
+                            <td class="px-5 py-5 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">Jan 18, 2020</p>
+                            </td>
+                            <td class="px-5 py-5 bg-white text-sm">
+                                <span
+                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                    <span aria-hidden
+                                        class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                    <span class="relative">Inactive</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div
+                    class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+                    <span class="text-xs xs:text-sm text-gray-900">
+                        Showing 1 to 4 of 50 Entries
+                    </span>
+                    <div class="inline-flex mt-2 xs:mt-0">
+                        <button
+                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                            Prev
+                        </button>
+                        <button
+                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
 
-      <!--
-  Heads up! 👋
-
-  This component comes with some `rtl` classes. Please remove them if they are not needed in your project.
--->
-
-<div class="rounded-lg border border-gray-200">
-  <div class="overflow-x-auto rounded-t-lg">
-    <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-      <thead class="ltr:text-left rtl:text-right">
-        <tr>
-          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Name</th>
-          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Date of Birth</th>
-          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Role</th>
-          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Salary</th>
-        </tr>
-      </thead>
-
-      <tbody class="divide-y divide-gray-200">
-        <tr>
-          <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">John Doe</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700">24/05/1995</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700">Web Developer</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700">$120,000</td>
-        </tr>
-
-        <tr>
-          <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Jane Doe</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700">04/11/1980</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700">Web Designer</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700">$100,000</td>
-        </tr>
-
-        <tr>
-          <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Gary Barlow</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700">24/05/1995</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700">Singer</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700">$20,000</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="rounded-b-lg border-t border-gray-200 px-4 py-2">
-    <ol class="flex justify-end gap-1 text-xs font-medium">
-      <li>
-        <a
-          href="#"
-          class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
-        >
-          <span class="sr-only">Prev Page</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="size-3"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </a>
-      </li>
-
-      <li>
-        <a
-          href="#"
-          class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
-        >
-          1
-        </a>
-      </li>
-
-      <li class="block size-8 rounded border-blue-600 bg-blue-600 text-center leading-8 text-white">
-        2
-      </li>
-
-      <li>
-        <a
-          href="#"
-          class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
-        >
-          3
-        </a>
-      </li>
-
-      <li>
-        <a
-          href="#"
-          class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
-        >
-          4
-        </a>
-      </li>
-
-      <li>
-        <a
-          href="#"
-          class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
-        >
-          <span class="sr-only">Next Page</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="size-3"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </a>
-      </li>
-    </ol>
-  </div>
-</div>
     </body>
 </html>
