@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Services\TaskService;
+use App\Http\Requests\TaskStoreRequest;
+use App\Http\Requests\TaskUpdateRequest;
 
 class TaskController extends Controller
 {   
@@ -17,7 +18,7 @@ class TaskController extends Controller
 
     public function create()
     {
-
+        return view('tasks.create');
     }
 
     public function store()
@@ -28,7 +29,7 @@ class TaskController extends Controller
     // displays the edit task form
     public function edit()  
     {
-
+        return 'task.edit';
     }
 
     public function update()
@@ -38,6 +39,6 @@ class TaskController extends Controller
 
     public function destroy()
     {
-
+        return 'task.destroy';
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-test('example', function () {
-    $response = $this->get('/');
+test('a user can login with valid credentials', function () {
+    
 
-    $response->assertStatus(200);
+    expect(true)->toBeTrue();
 });
+

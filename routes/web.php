@@ -11,5 +11,10 @@ Route::get('/',[DashboardController::class, 'index'])
     ->name('dashboard')
     ->middleware('auth');
 
-Route::get('/task/create',[TaskController::class, 'create'])->name('task.create');
-Route::get('/task/edit',[TaskController::class, 'edit'])->name('task.edit');
+Route::resource('task', TaskController::class)
+    ->except(['index', 'show'])
+    ->middleware('auth');
+
+Route::patch('/task/{task}/status', [TaskController::class, 'updateStatus'])
+    ->name('task.updateStatus')
+    ->middleware('auth');
