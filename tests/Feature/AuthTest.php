@@ -43,7 +43,7 @@ test('a user with correct inputs can register and redirects to dashboard', funct
 test('a user cannot register with invalid inputs', function () {
     $response = post(route('register'), [
         'name' => '',
-        'email' => 'wrongemail',
+        'email' => 'wrong_email_format',
         'password' => 'password',
         'password_confirmation' => 'new_password',
     ]);
