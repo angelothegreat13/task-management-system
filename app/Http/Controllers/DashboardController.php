@@ -9,8 +9,7 @@ class DashboardController extends Controller
     // display dashboard with list of tasks
     public function index()
     {
-        return view ('layouts.master');
-        // return view('dashboard');
+        return view('dashboard');
     }
 
 }

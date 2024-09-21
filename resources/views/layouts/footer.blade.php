@@ -1,5 +1,5 @@
 <footer class="bg-white">
-    <div class="pb-6 pt-16">
+    <div class="pb-6 pt-20">
         <div class="px-8 mt-16 border-t border-gray-200 pt-6 sm:flex sm:items-center sm:justify-between">
             <p class="text-center text-sm text-gray-500 sm:text-left">
                 Created by <b>Michael Angelo Manaog</b> 
