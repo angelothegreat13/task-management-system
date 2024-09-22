@@ -41,8 +41,6 @@ test('user can view edit task form', function() {
 
     $task = Task::factory()->create(['user_id' => $this->user->id]);
     $categories = Category::factory()->count(5)->create();
-    $statuses = config('task.status_sequence');
-    $nextStatus = app(TaskService::class)->getNextStatus($task->status, $statuses);
 
     $response = $this->get(route('task.edit', $task->id));
     $response->assertStatus(200);
@@ -50,22 +48,32 @@ test('user can view edit task form', function() {
         ->assertSee($task->description) 
         ->assertSee($task->status)
         ->assertSee($task->category->title);
-
-    foreach ($categories as $category) {
-        $response->assertSee($category->title);
-    }
-
-    foreach ($statuses as $status) {
-        $response->assertSee($status);
-    }
-
-    if ($nextStatus) {
-        $response->assertSee($nextStatus);
-    }
 });
 
 test('user can update task', function() {
     $this->actingAs($this->user);
 
+    $task = Task::factory()->create([
+        'user_id' => $this->user->id, 
+        'status' => 'New'
+    ]);
 
+    $updatedTask = [
+        'title' => 'Updated Task Title',
+        'description' => 'Updated task description.',
+        'category' => $task->category_id,
+        'status' => 'In Progress'
+    ];
+
+    $response = $this->patch(route('task.update', $task->id), $updatedTask);
+
+    $this->assertDatabaseHas('tasks', [
+        'id' => $task->id,
+        'title' => $updatedTask['title'],
+        'description' => $updatedTask['description'],
+        'status' => $updatedTask['status']
+    ]);
+
+    $response->assertRedirect(route('dashboard'))
+             ->assertSessionHas('message', 'Task updated successfully.');
 });

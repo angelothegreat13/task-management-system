@@ -53,7 +53,7 @@
                         id="status"
                         class="@error('status') border-red-500 @else border-gray-300 @enderror w-full rounded-lg text-gray-700 text-sm"
                     >
-                        @foreach ($statuses as $index => $status)
+                        @foreach ($statuses as $status)
                             <option 
                                 value="{{ $status }}"
                                 {{ old('status',$task->status) === $status ? 'selected' : '' }}

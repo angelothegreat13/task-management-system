@@ -48,9 +48,9 @@ class TaskController extends Controller
         return view('tasks.edit', compact('task', 'categories', 'statuses', 'nextStatus'));
     }
 
-    public function update(TaskUpdateRequest $request)
+    public function update(Task $task, TaskUpdateRequest $request)
     {
-        // return request()->all();
+        return $request;
     }
 
     public function destroy()
