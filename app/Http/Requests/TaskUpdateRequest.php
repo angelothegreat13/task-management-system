@@ -15,8 +15,6 @@ class TaskUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $currentStatus = $this->route('task')->status; 
-
         return [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000', 
@@ -24,7 +22,7 @@ class TaskUpdateRequest extends FormRequest
             'status' => [
                 'required',
                 Rule::in(config('task.status_sequence')),
-                new NextStatus($currentStatus),
+                new NextStatus($this->route('task')),
             ],
         ];
     }

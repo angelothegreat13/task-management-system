@@ -53,7 +53,7 @@
                         </th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                            Change Status
+                            Change Status To
                         </th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -62,7 +62,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($tasks as $task)
+                    @forelse ($tasks as $task)
                         <tr>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 {{ $task->title }}
@@ -74,7 +74,15 @@
                                 {{ $task->category->title ?? null }}
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                
+                                <form action="{{ route('task.updateStatus', $task->id) }}" method="POST" id="status-form-{{ $task->id }}">
+                                    @csrf
+                                    {{-- <button 
+                                        type="button" 
+                                        class="text-blue-600 hover:text-blue-900"
+                                        onclick="confirmChangeStatus({{ $task->id }}, '{{ $task->status }}')">
+                                        Change Status to <span id="next-status-{{ $task->id }}">{{ getNextStatus($task->status) }}</span>
+                                    </button> --}}
+                                </form>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm flex">
                                 <a href="{{ route('task.edit', $task->id) }}" class="text-indigo-600 hover:text-indigo-900">
@@ -94,10 +102,37 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5" class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                                No tasks found.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
         {{ $tasks->links() }}
     </div>
 </div>
+@push('scripts')
+<script type="text/javascript">
+function getNextStatus(currentStatus) {
+    const statuses = @json(config('task.status_sequence'));
+    const currentIndex = statuses.indexOf(currentStatus);
+
+    if (currentIndex !== -1 && currentIndex < statuses.length - 1) {
+        return statuses[currentIndex + 1]; 
+    }
+    return currentStatus;
+}
+
+function confirmChangeStatus(taskId, currentStatus) {
+    const nextStatus = getNextStatus(currentStatus);
+
+    if (confirm(`Are you sure you want to change the status to "${nextStatus}"?`)) {
+        document.getElementById(`status-form-${taskId}`).submit();
+    }
+}
+</script>
+@endpush

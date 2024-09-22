@@ -27,4 +27,19 @@ class Task extends Model
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * Get the next sequential status for the task.
+     *
+     * @return string|null
+     */
+    public function getNextStatus()
+    {
+        $statuses = config('task.status_sequence');
+        $currentStatusIndex = array_search($this->status, $statuses);
+        $statusesLastIndex = count($statuses) - 1;
+
+        return $currentStatusIndex !== false && $currentStatusIndex < $statusesLastIndex
+            ? $statuses[$currentStatusIndex + 1]
+            : null;
+    }
 }

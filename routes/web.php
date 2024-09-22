@@ -15,6 +15,6 @@ Route::resource('task', TaskController::class)
     ->except(['index', 'show'])
     ->middleware('auth');
 
-Route::patch('/task/{task}/status', [TaskController::class, 'updateStatus'])
+Route::post('/task/{task}/update-status', [TaskController::class, 'updateStatus'])
     ->name('task.updateStatus')
     ->middleware('auth');

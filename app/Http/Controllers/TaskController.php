@@ -44,7 +44,7 @@ class TaskController extends Controller
     {
         $categories = Category::orderBy('title')->get();
         $statuses = config('task.status_sequence');
-        $nextStatus = $this->taskService->getNextStatus($task->status, $statuses);
+        $nextStatus = $task->getNextStatus();
 
         return view('tasks.edit', compact('task', 'categories', 'statuses', 'nextStatus'));
     }
@@ -71,6 +71,11 @@ class TaskController extends Controller
             ->with('message', 'Task updated successfully.');
     }
 
+    public function updateStatus()
+    {
+
+    }
+
     public function destroy(Task $task)
     {
         $task->delete();
@@ -78,5 +83,6 @@ class TaskController extends Controller
         return redirect()->route('dashboard')
             ->with('message', 'Task deleted successfully.');
     }
+
 
 }
