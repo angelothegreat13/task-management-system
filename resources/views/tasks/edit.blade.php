@@ -44,21 +44,20 @@
                 <label for="status" class="block text-sm font-medium leading-6 text-gray-900">Status</label>
                 <div class="mt-2">
                     <select
-    name="status"
-    id="status"
-    class="@error('status') border-red-500 @else border-gray-300 @enderror w-full rounded-lg text-gray-700 text-sm"
->
-    @foreach ($statuses as $index => $status)
-        <option 
-            value="{{ $status }}"
-            {{ $task->status === $status ? 'selected' : '' }}
-            {{ ($status !== $task->status && $status !== $nextStatus) ? 'disabled' : '' }}
-        >
-            {{ $status }}
-        </option>
-    @endforeach
-</select>
-
+                        name="status"
+                        id="status"
+                        class="@error('status') border-red-500 @else border-gray-300 @enderror w-full rounded-lg text-gray-700 text-sm"
+                    >
+                        @foreach ($statuses as $index => $status)
+                            <option 
+                                value="{{ $status }}"
+                                {{ old('status',$task->status) === $status ? 'selected' : '' }}
+                                {{ ($status !== $task->status && $status !== $nextStatus) ? 'disabled' : '' }}
+                            >
+                                {{ $status }}
+                            </option>
+                        @endforeach
+                    </select>
                     @error('status')
                         <p class="tracking-wide text-red-500 text-sm mt-2 mb-0 italic">
                             {{ $message }}
@@ -77,7 +76,7 @@
                     >
                         <option value="" selected>Select a Category</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>
+                            <option value="{{ $category->id }}" {{ old('category', $category->id) == $category->id ? 'selected' : '' }}>
                                 {{ $category->title }}
                             </option>
                         @endforeach

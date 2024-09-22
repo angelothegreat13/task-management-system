@@ -16,9 +16,14 @@ class TaskService
     public function getNextStatus(string $status, array $statuses)
     {
         $currentStatusIndex = array_search($status, $statuses);
+    
+        if ($currentStatusIndex === false) {
+            return null;
+        }
+
         $statusesLastIndex = count($statuses) - 1;
 
-        return $currentStatusIndex !== false && $currentStatusIndex < $statusesLastIndex
+        return $currentStatusIndex < $statusesLastIndex
             ? $statuses[$currentStatusIndex + 1]
             : null;
     }
