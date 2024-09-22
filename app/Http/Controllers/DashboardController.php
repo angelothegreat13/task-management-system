@@ -12,10 +12,10 @@ class DashboardController extends Controller
 {   
     public function index()
     {
-        $tasks = Task::latest()->paginate(5);
+        $tasks = Task::with('category')->latest()->paginate(5);
         $categories = Category::orderBy('title')->get();
         $statuses = config('task.status_sequence');
-
+        
         return view('dashboard', compact('tasks', 'categories', 'statuses'));
     }
 }

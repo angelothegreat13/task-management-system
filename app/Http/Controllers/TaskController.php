@@ -35,8 +35,6 @@ class TaskController extends Controller
 
         Task::create($taskData);
 
-        // $this->taskService->store($taskData);
-
         return redirect()->route('dashboard')
             ->with('message', 'Task created successfully.');
     }

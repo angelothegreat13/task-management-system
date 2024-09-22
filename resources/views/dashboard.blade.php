@@ -22,6 +22,14 @@
     </dl>
 </div>
 
+@if (session('message'))
+    <div class="mx-auto max-w-screen-xl sm:px-6 lg:px-8">
+        <div class="mb-4 px-4 py-5 bg-green-100 border border-green-100 text-green-700 rounded">
+            {{ session('message') }}
+        </div>
+    </div>
+@endif
+
 <div class="mx-auto max-w-screen-xl px-4 sm:px-6">
     <form method="GET" action="#" class="flex sm:flex-row flex-col justify-end">
         <select
@@ -91,22 +99,31 @@
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 {{ $task->title }}
                             </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white">
+                                <x-task-status :status="$task->status" />
+                            </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            
+                                {{ $task->category->title ?? null }}
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 
                             </td>
-                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                
-                            </td>
-                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                <span
-                                    class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                    <span aria-hidden
-                                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                    <span class="relative">Activo</span>
-                                </span>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm flex">
+                                <a href="{{ route('task.edit', $task->id) }}" class="text-indigo-600 hover:text-indigo-900">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                    </svg>
+                                </a>
+
+                                <form action="{{ route('task.destroy', $task->id) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this task?')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                                        </svg>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
