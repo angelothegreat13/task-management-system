@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TaskStoreRequest extends FormRequest
 {
@@ -14,8 +15,13 @@ class TaskStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:255',
-            'status' => 'required',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000', 
+            'category' => 'nullable|exists:categories,id', 
+            'status' => [
+                'required',
+                Rule::in(config('task.status_sequence')),
+            ],
         ];
     }
 }

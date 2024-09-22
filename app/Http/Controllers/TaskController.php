@@ -28,9 +28,17 @@ class TaskController extends Controller
 
     public function store(TaskStoreRequest $request)
     {
-        $validated = $request->validated();
+        $taskData = array_merge($request->validated(), [
+            'user_id' => auth()->id(),
+            'category_id' => $request->input('category')
+        ]);
 
-        dd($validated);
+        Task::create($taskData);
+
+        // $this->taskService->store($taskData);
+
+        return redirect()->route('dashboard')
+            ->with('message', 'Task created successfully.');
     }
 
     // displays the edit task form

@@ -18,7 +18,7 @@ test('user can create a task', function() {
         'title' => fake()->sentence(),
         'description' => fake()->paragraph(),
         'status' => 'New', 
-        'category_id' => $category->id, 
+        'category' => $category->id, 
     ];
 
     $response = $this->post(route('task.store'), $taskPostRequest);
@@ -27,7 +27,7 @@ test('user can create a task', function() {
         'title' => $taskPostRequest['title'],
         'description' => $taskPostRequest['description'],
         'status' => $taskPostRequest['status'],
-        'category_id' => $taskPostRequest['category_id'],
+        'category_id' => $taskPostRequest['category'],
         'user_id' => $this->user->id,
     ]);
 

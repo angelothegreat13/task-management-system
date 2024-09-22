@@ -45,11 +45,12 @@
                     <select
                         name="status"
                         id="status"
-                        class="w-full rounded-lg border-gray-300 text-gray-700 text-sm"
+                        class="@error('status') border-red-500 @else border-gray-300 @enderror w-full rounded-lg text-gray-700 text-sm"
                     >
-                        <option value="" disabled selected>Set Status</option>
                         @foreach ($statuses as $status)
-                            <option value="{{ $status }}">{{ $status }}</option>
+                            <option value="{{ $status }}" {{ old('status') === $status ? 'selected' : '' }}>
+                                {{ $status }}
+                            </option>
                         @endforeach
                     </select>
                     @error('status')
@@ -66,17 +67,33 @@
                     <select
                         name="category"
                         id="category"
-                        class="w-full rounded-lg border-gray-300 text-gray-700 text-sm"
+                        class="@error('category') border-red-500 @else border-gray-300 @enderror w-full rounded-lg text-gray-700 text-sm"
                     >
-                        <option value="" disabled selected>Select a Category</option>
+                        <option value="" selected>Select a Category</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->title }}</option>
+                            <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->title }}
+                            </option>
                         @endforeach
                     </select>
+                    @error('category')
+                        <p class="tracking-wide text-red-500 text-sm mt-2 mb-0 italic">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
             </div>
-            <div>
-                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
+            <div class="text-right">
+                <a 
+                    class="mr-2 rounded-md bg-gray-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                    href="{{ route('dashboard') }}"
+                > Back to Dashboard
+                </a>
+                <button 
+                    type="submit" 
+                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                > Submit
+                </button>
             </div>
         </form>
     </div>

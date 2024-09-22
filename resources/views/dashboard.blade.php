@@ -23,48 +23,49 @@
 </div>
 
 <div class="mx-auto max-w-screen-xl px-4 sm:px-6">
-    <div class="my-2 flex sm:flex-row flex-col">
-        <div class="flex flex-row mb-1 sm:mb-0">
-            <div class="relative">
-                <select
-                    class="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                    <option>All</option>
-                    <option>New</option>
-                    <option>In Progress</option>
-                    <option>Under Review</option>
-                    <option>Completed</option>
-                </select>
-                <div
-                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                    </svg>
-                </div>
-            </div>
-            <div class="relative">
-                <select
-                    class="h-full rounded-r border-t border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                    <option>Sort By Category</option>
-                    <option>Active</option>
-                    <option>Inactive</option>
-                </select>
-                <div
-                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+    <form method="GET" action="#" class="flex sm:flex-row flex-col justify-end">
+        <select
+            name="status"
+            id="status"
+            class="border-gray-300 rounded-lg text-gray-700 text-sm sm:mr-2 sm:mb-0 mb-3"
+        >
+            <option value="" {{ app('request')->input('status') ? '' : 'selected' }}>Set Status</option>
+            @foreach ($statuses as $status)
+                <option value="{{ $status }}" {{ app('request')->input('status') === $status ? 'selected' : '' }}>
+                    {{ $status }}
+                </option>
+            @endforeach
+        </select>
+        <select
+            name="category"
+            id="category"
+            class="border-gray-300 rounded-lg text-gray-700 text-sm sm:mr-2 sm:mb-0 mb-3"
+        >
+            <option value="" {{ app('request')->input('category') ? '' : 'selected' }}>Set Category</option>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}" {{ app('request')->input('category') == $category->id ? 'selected' : '' }}>
+                    {{ $category->title }}
+                </option>
+            @endforeach
+        </select>
+        <button
+            type="submit" 
+            class="inline-flex items-center justify-center gap-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+            <span class="text-sm font-medium">Filter</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+            </svg>
+        </button>
+    </form>
+    <div class="sm:-mx-8 sm:px-8 py-4 overflow-x-auto">
+        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden mb-2">
             <table class="min-w-full leading-normal">
                 <thead>
                     <tr>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                            Task Name
+                            Task 
                         </th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -76,62 +77,43 @@
                         </th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            Change Status
+                        </th>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             Actions
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 w-10 h-10">
-                                    <img class="w-full h-full rounded-full"
-                                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                                        alt="" />
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-gray-900 whitespace-no-wrap">
-                                        Vera Carpenter
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">Admin</p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                                Jan 21, 2020
-                            </p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <span
-                                class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                <span aria-hidden
-                                    class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                <span class="relative">Activo</span>
-                            </span>
-                        </td>
-                    </tr>
+                    @foreach ($tasks as $task)
+                        <tr>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                {{ $task->title }}
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <span
+                                    class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                    <span aria-hidden
+                                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                    <span class="relative">Activo</span>
+                                </span>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
-            <div
-                class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-                <span class="text-xs xs:text-sm text-gray-900">
-                    Showing 1 to 4 of 50 Entries
-                </span>
-                <div class="inline-flex mt-2 xs:mt-0">
-                    <button
-                        class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                        Prev
-                    </button>
-                    <button
-                        class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
-                        Next
-                    </button>
-                </div>
-            </div>
         </div>
+        {{ $tasks->links() }}
     </div>
 </div>
 @endsection
