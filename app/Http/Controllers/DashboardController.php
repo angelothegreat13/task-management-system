@@ -15,7 +15,7 @@ class DashboardController extends Controller
         $tasks = Task::with('category')->latest()->paginate(5);
         $categories = Category::orderBy('title')->get();
         $statuses = config('task.status_sequence');
-        
+
         return view('dashboard', compact('tasks', 'categories', 'statuses'));
     }
 }

@@ -39,10 +39,14 @@ class TaskController extends Controller
             ->with('message', 'Task created successfully.');
     }
 
-    // displays the edit task form
-    public function edit()  
+    public function edit(Task $task)  
     {
-        return 'task.edit';
+        $task = $task->load('category');
+        $categories = Category::orderBy('title')->get();
+        $statuses = config('task.status_sequence');
+        $nextStatus = $this->taskService->getNextStatus($task->status, $statuses);
+
+        return view('tasks.edit', compact('task', 'categories', 'statuses', 'nextStatus'));
     }
 
     public function update()
@@ -54,4 +58,5 @@ class TaskController extends Controller
     {
         return 'task.destroy';
     }
+
 }

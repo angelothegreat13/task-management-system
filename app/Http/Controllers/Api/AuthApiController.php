@@ -10,7 +10,7 @@ class AuthApiController extends Controller
     // POST /api/login
     public function login()
     {
-
+        
     }
 
     // POST /api/register
