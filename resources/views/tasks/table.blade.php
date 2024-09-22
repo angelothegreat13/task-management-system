@@ -73,16 +73,20 @@
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 {{ $task->category->title ?? null }}
                             </td>
-                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                <form action="{{ route('task.updateStatus', $task->id) }}" method="POST" id="status-form-{{ $task->id }}">
-                                    @csrf
-                                    {{-- <button 
-                                        type="button" 
-                                        class="text-blue-600 hover:text-blue-900"
-                                        onclick="confirmChangeStatus({{ $task->id }}, '{{ $task->status }}')">
-                                        Change Status to <span id="next-status-{{ $task->id }}">{{ getNextStatus($task->status) }}</span>
-                                    </button> --}}
-                                </form>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white">
+                                @if ($task->getNextStatus())
+                                    <form action="{{ route('task.updateStatus', $task->id) }}" method="POST" id="status-form-{{ $task->id }}">
+                                        @csrf
+                                        <input type="hidden" name="status" value="{{ $task->getNextStatus() }}">
+                                        <button 
+                                            type="button" 
+                                            class="bg-blue-600 text-white text-sm px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all"
+                                            onclick="confirmChangeStatus({{ $task->id }}, '{{ $task->getNextStatus() }}')"
+                                        >
+                                            {{ $task->getNextStatus() }}
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm flex">
                                 <a href="{{ route('task.edit', $task->id) }}" class="text-indigo-600 hover:text-indigo-900">
@@ -117,19 +121,7 @@
 </div>
 @push('scripts')
 <script type="text/javascript">
-function getNextStatus(currentStatus) {
-    const statuses = @json(config('task.status_sequence'));
-    const currentIndex = statuses.indexOf(currentStatus);
-
-    if (currentIndex !== -1 && currentIndex < statuses.length - 1) {
-        return statuses[currentIndex + 1]; 
-    }
-    return currentStatus;
-}
-
-function confirmChangeStatus(taskId, currentStatus) {
-    const nextStatus = getNextStatus(currentStatus);
-
+function confirmChangeStatus(taskId, nextStatus) {
     if (confirm(`Are you sure you want to change the status to "${nextStatus}"?`)) {
         document.getElementById(`status-form-${taskId}`).submit();
     }

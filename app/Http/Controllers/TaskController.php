@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\TaskService;
 use App\Http\Requests\TaskStoreRequest;
 use App\Http\Requests\TaskUpdateRequest;
+use App\Http\Requests\TaskUpdateStatusRequest;
 use App\Models\Task;
 use App\Models\Category;
 use App\Models\TaskStatusLog;
@@ -71,9 +72,21 @@ class TaskController extends Controller
             ->with('message', 'Task updated successfully.');
     }
 
-    public function updateStatus()
+    public function updateStatus(Task $task, TaskUpdateStatusRequest $request)
     {
+        dd($request->all());
+        // dd($request->all());
+        // // $validator = Validator::make($request->all(), $request->rules());
 
+        // if ($validator->fails()) {
+        //     dd($validator->errors()); // Dump validation errors
+        // }
+
+        // dd($request->all()); // Dump the request if validation passed
+        // dd($request);
+        // return request()->all();
+        // return $task;
+        // $this->taskService
     }
 
     public function destroy(Task $task)
@@ -83,6 +96,4 @@ class TaskController extends Controller
         return redirect()->route('dashboard')
             ->with('message', 'Task deleted successfully.');
     }
-
-
 }
