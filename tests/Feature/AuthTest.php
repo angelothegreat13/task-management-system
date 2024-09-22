@@ -3,7 +3,7 @@
 use App\Models\User;
 use function Pest\Laravel\post;
 
-test('a user can login with valid credentials and redirects to dashboard', function () {
+test('user can login with valid credentials and redirects to dashboard', function () {
     $user = User::factory()->create();
 
     $response = post(route('login'), [
@@ -15,7 +15,7 @@ test('a user can login with valid credentials and redirects to dashboard', funct
     $this->assertAuthenticatedAs($user);
 });
 
-test('a user cannot login with invalid credentials', function () {
+test('user cannot login with invalid credentials', function () {
     $response = post(route('login'), [
         'email' => 'johndoe@gmail.com',
         'password' => 'password'
@@ -25,7 +25,7 @@ test('a user cannot login with invalid credentials', function () {
     $response->assertSessionHasErrors(['email']);
 });
 
-test('a user with correct inputs can register and redirects to dashboard', function() {
+test('user with correct inputs can register and redirects to dashboard', function() {
     $userData = [
         'name' => fake()->name(),
         'email' => fake()->unique()->safeEmail(),
@@ -39,8 +39,7 @@ test('a user with correct inputs can register and redirects to dashboard', funct
     $this->assertAuthenticated();
 });
 
-
-test('a user cannot register with invalid inputs', function () {
+test('user cannot register with invalid inputs', function () {
     $response = post(route('register'), [
         'name' => '',
         'email' => 'wrong_email_format',

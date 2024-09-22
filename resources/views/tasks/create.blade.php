@@ -47,11 +47,10 @@
                         id="status"
                         class="w-full rounded-lg border-gray-300 text-gray-700 text-sm"
                     >
-                        <option value="" disabled selected>Select Status</option>
-                        <option value="New">New</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Under Review">Under Review</option>
-                        <option value="Completed">Completed</option>
+                        <option value="" disabled selected>Set Status</option>
+                        @foreach ($statuses as $status)
+                            <option value="{{ $status }}">{{ $status }}</option>
+                        @endforeach
                     </select>
                     @error('status')
                         <p class="tracking-wide text-red-500 text-sm mt-2 mb-0 italic">
@@ -69,14 +68,13 @@
                         id="category"
                         class="w-full rounded-lg border-gray-300 text-gray-700 text-sm"
                     >
-                        <option value="" disabled selected>List of Categories</option>
-                        <option value="Bug">Bug</option>
-                        <option value="Feature">Feature</option>
-                        <option value="Improvement">Improvement</option>
+                        <option value="" disabled selected>Select a Category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->title }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
-
             <div>
                 <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
             </div>
