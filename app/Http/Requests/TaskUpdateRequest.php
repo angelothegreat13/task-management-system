@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TaskUpdateRequest extends FormRequest
 {
@@ -14,7 +15,13 @@ class TaskUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000', 
+            'category' => 'nullable|exists:categories,id', 
+            'status' => [
+                'required',
+                Rule::in(config('task.status_sequence')),
+            ],
         ];
     }
 }

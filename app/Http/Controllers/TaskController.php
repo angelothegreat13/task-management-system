@@ -41,7 +41,6 @@ class TaskController extends Controller
 
     public function edit(Task $task)  
     {
-        $task = $task->load('category');
         $categories = Category::orderBy('title')->get();
         $statuses = config('task.status_sequence');
         $nextStatus = $this->taskService->getNextStatus($task->status, $statuses);
@@ -51,7 +50,7 @@ class TaskController extends Controller
 
     public function update(TaskUpdateRequest $request)
     {
-        return request()->all();
+        // return request()->all();
     }
 
     public function destroy()

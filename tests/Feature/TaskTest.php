@@ -46,7 +46,10 @@ test('user can view edit task form', function() {
 
     $response = $this->get(route('task.edit', $task->id));
     $response->assertStatus(200);
-    $response->assertSee($task->title);
+    $response->assertSee($task->title)
+        ->assertSee($task->description) 
+        ->assertSee($task->status)
+        ->assertSee($task->category->title);
 
     foreach ($categories as $category) {
         $response->assertSee($category->title);
@@ -59,4 +62,10 @@ test('user can view edit task form', function() {
     if ($nextStatus) {
         $response->assertSee($nextStatus);
     }
+});
+
+test('user can update task', function() {
+    $this->actingAs($this->user);
+
+
 });

@@ -37,6 +37,11 @@
                         rows="4"
                         placeholder="(Enter any additional notes...)"
                     >{{ old('description', $task->description) }}</textarea>
+                    @error('description')
+                        <p class="tracking-wide text-red-500 text-sm mt-2 mb-0 italic">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
             </div>
             
@@ -76,7 +81,7 @@
                     >
                         <option value="" selected>Select a Category</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category', $category->id) == $category->id ? 'selected' : '' }}>
+                            <option value="{{ $category->id }}" {{ old('category', $task->category_id) == $category->id ? 'selected' : '' }}>
                                 {{ $category->title }}
                             </option>
                         @endforeach

@@ -36,6 +36,11 @@
                         rows="4"
                         placeholder="(Enter any additional notes...)"
                     >{{ old('description') }}</textarea>
+                    @error('description')
+                        <p class="tracking-wide text-red-500 text-sm mt-2 mb-0 italic">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
             </div>
             
