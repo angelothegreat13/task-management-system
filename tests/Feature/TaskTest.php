@@ -53,9 +53,10 @@ test('user can view edit task form', function() {
 test('user can update task', function() {
     $this->actingAs($this->user);
 
+    $oldStatus = 'New';
     $task = Task::factory()->create([
         'user_id' => $this->user->id, 
-        'status' => 'New'
+        'status' => $oldStatus
     ]);
 
     $updatedTask = [
@@ -74,6 +75,32 @@ test('user can update task', function() {
         'status' => $updatedTask['status']
     ]);
 
+    $this->assertDatabaseHas('task_status_logs', [
+        'task_id' => $task->id,
+        'old_status' => $oldStatus,
+        'new_status' => $updatedTask['status'],
+        'changed_at' => now()->format('Y-m-d H:i:s')
+    ]);
+
     $response->assertRedirect(route('dashboard'))
              ->assertSessionHas('message', 'Task updated successfully.');
+});
+
+test('user can delete task', function() {
+    $this->actingAs($this->user);
+
+    $task = Task::factory()->create(['user_id' => $this->user->id]);
+
+    $this->assertDatabaseHas('tasks', [
+        'id' => $task->id,
+    ]);
+
+    $response = $this->delete(route('task.destroy', $task->id));
+
+    $this->assertDatabaseMissing('tasks', [
+        'id' => $task->id
+    ]);
+
+    $response->assertRedirect(route('dashboard'))
+             ->assertSessionHas('message', 'Task deleted successfully.');
 });

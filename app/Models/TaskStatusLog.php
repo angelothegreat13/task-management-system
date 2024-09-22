@@ -14,5 +14,4 @@ class TaskStatusLog extends Model
     protected $casts = [
         'change_at' => 'datetime',    
     ];
-
 }

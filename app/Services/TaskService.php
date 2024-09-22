@@ -28,9 +28,9 @@ class TaskService
             : null;
     }
 
-    public function store()
+    public function store(array $taskData)
     {
-
+        
     }
 
     public function update()
