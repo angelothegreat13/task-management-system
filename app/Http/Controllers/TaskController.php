@@ -64,7 +64,7 @@ class TaskController extends Controller
 
     public function updateStatus(Task $task, TaskUpdateStatusRequest $request)
     {
-        $this->taskService->updateStatus($task, $request->status);
+        $this->taskService->updateStatus($task, $request->validated('status'));
 
         return redirect()->route('dashboard')
             ->with('message', 'Task Status updated successfully.');

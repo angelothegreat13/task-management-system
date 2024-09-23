@@ -12,6 +12,7 @@ test('user can login with valid credentials and redirects to dashboard', functio
     ]);
 
     $response->assertRedirect(route('dashboard'));
+
     $this->assertAuthenticatedAs($user);
 });
 
@@ -22,6 +23,7 @@ test('user cannot login with invalid credentials', function () {
     ]);
 
     $this->assertGuest();
+    
     $response->assertSessionHasErrors(['email']);
 });
 
@@ -35,7 +37,13 @@ test('user with correct inputs can register and redirects to dashboard', functio
 
     $response = post(route('register'), $userData);
 
+    $this->assertDatabaseHas('users', [
+        'name' => $userData['name'],
+        'email' => $userData['email']
+    ]);
+
     $response->assertRedirect(route('dashboard'));
+
     $this->assertAuthenticated();
 });
 
@@ -48,5 +56,6 @@ test('user cannot register with invalid inputs', function () {
     ]);
 
     $this->assertGuest();
+
     $response->assertSessionHasErrors(['name', 'email', 'password']);
 });
