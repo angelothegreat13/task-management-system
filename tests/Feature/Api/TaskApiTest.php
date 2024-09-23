@@ -12,22 +12,24 @@ beforeEach(function () {
 });
 
 test('user can retrieve paginated tasks', function () {
-    Task::factory()->count(57)->create();
+    Task::factory()->count(57)->create([
+        'user_id' => $this->user->id
+    ]);
 
-    $response = $this->getJson(route('tasks.index', ['per_page' => 20, 'page' => 2]));
+    $response = $this->getJson(route('tasks.index', ['page' => 2]));
 
     $response->assertStatus(200)
         ->assertJson(fn (AssertableJson $json) =>
             $json->where('success', true)
-                 ->where('message', 'Tasks retrieved successfully.')
-                 ->has('data.tasks', 20) 
-                 ->has('data.pagination', fn ($json) =>
-                     $json->where('current_page', 2)
-                          ->where('last_page', 3)
-                          ->where('per_page', 20)
-                          ->where('count', 20)  
-                          ->where('total', 57)  
-                          ->etc()
+                ->where('message', 'Tasks retrieved successfully.')
+                ->has('data.tasks', 10)  
+                ->has('data.pagination', fn ($json) =>
+                    $json->where('current_page', 2)
+                        ->where('last_page', 6) 
+                        ->where('per_page', 10) 
+                        ->where('count', 10)
+                        ->where('total', 57) 
+                        ->etc()
                  )
         );
 });
@@ -36,8 +38,14 @@ test('can filter tasks by category', function () {
     $category1 = Category::factory()->create();
     $category2 = Category::factory()->create();
 
-    Task::factory()->count(10)->create(['category_id' => $category1->id]);
-    Task::factory()->count(5)->create(['category_id' => $category2->id]);  
+    Task::factory()->count(10)->create([
+        'category_id' => $category1->id,
+        'user_id' => $this->user->id
+    ]);
+    Task::factory()->count(5)->create([
+        'category_id' => $category2->id,
+        'user_id' => $this->user->id
+    ]);  
 
     $response = $this->getJson(route('tasks.index', ['category' => $category1->id]));
 
@@ -54,8 +62,15 @@ test('can filter tasks by status', function () {
     $statusNew = 'New';
     $statusCompleted = 'Completed';
 
-    Task::factory()->count(7)->create(['status' => $statusNew]); 
-    Task::factory()->count(3)->create(['status' => $statusCompleted]); 
+    Task::factory()->count(7)->create([
+        'status' => $statusNew,
+        'user_id' => $this->user->id
+
+    ]); 
+    Task::factory()->count(3)->create([
+        'status' => $statusCompleted,
+        'user_id' => $this->user->id
+    ]); 
 
     $response = $this->getJson(route('tasks.index', ['status' => $statusNew]));
 
@@ -75,9 +90,21 @@ test('can filter tasks by category and status', function () {
     $statusInProgress = 'In Progress';
     $statusUnderReview = 'Under Review';
 
-    Task::factory()->count(5)->create(['category_id' => $category1->id, 'status' => $statusInProgress]);  
-    Task::factory()->count(3)->create(['category_id' => $category1->id, 'status' => $statusUnderReview]); 
-    Task::factory()->count(4)->create(['category_id' => $category2->id, 'status' => $statusInProgress]);  
+    Task::factory()->count(5)->create([
+        'category_id' => $category1->id, 
+        'status' => $statusInProgress,
+        'user_id' => $this->user->id
+    ]);  
+    Task::factory()->count(3)->create([
+        'category_id' => $category1->id, 
+        'status' => $statusUnderReview,
+        'user_id' => $this->user->id
+    ]); 
+    Task::factory()->count(4)->create([
+        'category_id' => $category2->id, 
+        'status' => $statusInProgress,
+        'user_id' => $this->user->id
+    ]);  
 
     $response = $this->getJson(route('tasks.index', [
         'category' => $category1->id, 

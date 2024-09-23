@@ -7,24 +7,20 @@ use App\Models\TaskStatusLog;
 
 class TaskService
 {   
-    public function getTasks(array $filters = [], bool $paginate = true)
+    public function getTaskStatistics($userId)
     {
-        $query = Task::query()->latest()->with('category');
+        $statusSequence = config('task.status_sequence');
+        $taskCounts = array_fill_keys($statusSequence, 0);
+        $tasks = Task::where('user_id', $userId)
+            ->select('status', \DB::raw('count(*) as count'))
+            ->groupBy('status')
+            ->get();
 
-        if (isset($filters['status'])) {
-            $query->where('status', $filters['status']);
+        foreach ($tasks as $task) {
+            $taskCounts[$task->status] = $task->count;
         }
 
-        if (isset($filters['category'])) {
-            $query->where('category_id', $filters['category']);
-        }
-
-        if ($paginate) {
-            $perPage = $filters['per_page'] ?? 10;
-            return $query->paginate($perPage);
-        }
-
-        return $query->get();
+        return $taskCounts;
     }
 
     public function store(array $taskData)
@@ -36,11 +32,6 @@ class TaskService
         $task = Task::create($taskData);
 
         return $task;
-    }
-    
-    public function getStatistics()
-    {
-
     }
 
     public function update(Task $task, array $taskData)
@@ -68,10 +59,5 @@ class TaskService
     public function updateStatus(Task $task, string $newStatus)
     {
         return $this->update($task, ['status' => $newStatus]);
-    }
-
-    public function delete()
-    {
-
     }
 }

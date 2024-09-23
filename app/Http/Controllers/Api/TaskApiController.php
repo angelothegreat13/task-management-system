@@ -27,7 +27,9 @@ class TaskApiController extends Controller
 
     public function index(Request $request)
     {
-        $tasksQuery = Task::with('category')->latest(); 
+        $tasksQuery = Task::with('category')
+            ->latest()
+            ->where('user_id', auth()->id()); 
         $filteredTasksQuery = $this->applyFilters($tasksQuery, $request->all());
         $tasks = $filteredTasksQuery->paginate(10);
 
