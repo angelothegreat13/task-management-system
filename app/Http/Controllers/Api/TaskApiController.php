@@ -86,4 +86,12 @@ class TaskApiController extends Controller
 
         return response()->noContent();
     }
+
+    public function getStatistics()
+    {
+        $statistics = $this->taskService->getTaskStatistics(auth()->id());
+
+        return $this->successResponse('Task stats retrieved successfully', $statistics);
+    }
+
 }

@@ -15,3 +15,7 @@ Route::apiResource('tasks', TaskApiController::class)
 Route::post('/tasks/{task}/update-status', [TaskApiController::class, 'updateStatus'])
     ->name('tasks.updateStatus')
     ->middleware('auth:sanctum');
+
+Route::get('/tasks-stats', [TaskApiController::class, 'getStatistics'])
+    ->name('tasks.getStatistics')
+    ->middleware('auth:sanctum');

@@ -26,7 +26,7 @@ class DashboardController extends Controller
             ->latest()
             ->where('user_id', auth()->id()); 
         $tasks = $this->applyFilters($tasksQuery, $request->all())->paginate(10);
-
+        
         $statistics = $this->taskService->getTaskStatistics(auth()->id());
         $categories = Category::orderBy('title')->get();
         $statuses = config('task.status_sequence');
