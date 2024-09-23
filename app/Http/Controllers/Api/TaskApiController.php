@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\TaskService;
+use App\Models\Task;
+use App\Models\Category;
+use App\Models\TaskStatusLog;
+use App\Http\Requests\TaskStoreRequest;
+use App\Http\Requests\TaskUpdateRequest;
+use App\Http\Requests\TaskUpdateStatusRequest;
 
 class TaskApiController extends Controller
 {
@@ -35,32 +41,27 @@ class TaskApiController extends Controller
         ]);
     }
 
-    // POST /api/tasks
-    public function store()
+    public function store(TaskStoreRequest $request)
     {
 
     }
 
-    //  GET /api/tasks/{id}
-    public function show()
+    public function show(Task $task)
     {
 
     }
 
-    // PUT /api/tasks/{id}
-    public function update()
+    public function update(Task $task, TaskUpdateRequest $request)
     {
      
     }
 
-    // DELETE /api/tasks/{id}
-    public function destroy()
+    public function updateStatus(Task $task, TaskUpdateStatusRequest $request)
     {
 
     }
 
-    // POST /api/tasks/{id}/update-status
-    public function updateStatus()
+    public function destroy(Task $task)
     {
 
     }
