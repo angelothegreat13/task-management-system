@@ -11,11 +11,12 @@ use App\Models\TaskStatusLog;
 use App\Http\Requests\TaskStoreRequest;
 use App\Http\Requests\TaskUpdateRequest;
 use App\Http\Requests\TaskUpdateStatusRequest;
+use App\Traits\FilterableTrait;
 use App\Traits\ApiResponseTrait;
 
 class TaskApiController extends Controller
 {
-    use ApiResponseTrait;
+    use ApiResponseTrait, FilterableTrait;
 
     protected $taskService;
 
@@ -26,7 +27,9 @@ class TaskApiController extends Controller
 
     public function index(Request $request)
     {
-        $tasks = $this->taskService->getTasks($request->all());
+        $tasksQuery = Task::with('category')->latest(); 
+        $filteredTasksQuery = $this->applyFilters($tasksQuery, $request->all());
+        $tasks = $filteredTasksQuery->paginate(10);
 
         return $this->successResponse('Tasks retrieved successfully.', [
             'tasks' => $tasks->items(),
