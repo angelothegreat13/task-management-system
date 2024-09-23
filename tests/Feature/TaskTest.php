@@ -54,6 +54,7 @@ test('user can update task', function() {
     $this->actingAs($this->user);
 
     $oldStatus = 'Under Review';
+    $newStatus = 'Completed';
     $task = Task::factory()->create([
         'user_id' => $this->user->id, 
         'status' => $oldStatus
@@ -63,7 +64,7 @@ test('user can update task', function() {
         'title' => 'Updated Task Title',
         'description' => 'Updated task description.',
         'category' => $task->category_id,
-        'status' => 'Completed'
+        'status' => $newStatus
     ];
 
     $response = $this->patch(route('task.update', $task->id), $updatedTask);
@@ -72,7 +73,7 @@ test('user can update task', function() {
         'id' => $task->id,
         'title' => $updatedTask['title'],
         'description' => $updatedTask['description'],
-        'status' => $updatedTask['status'],
+        'status' => $newStatus,
         'changed_at' => now(),
         'completed_at' => now()
     ]);
@@ -80,12 +81,12 @@ test('user can update task', function() {
     $this->assertDatabaseHas('task_status_logs', [
         'task_id' => $task->id,
         'old_status' => $oldStatus,
-        'new_status' => $updatedTask['status'],
+        'new_status' => $newStatus,
         'changed_at' => now()
     ]);
 
     $response->assertRedirect(route('dashboard'))
-             ->assertSessionHas('message', 'Task updated successfully.');
+        ->assertSessionHas('message', 'Task updated successfully.');
 });
 
 test('user can delete task', function() {
@@ -104,9 +105,8 @@ test('user can delete task', function() {
     ]);
 
     $response->assertRedirect(route('dashboard'))
-             ->assertSessionHas('message', 'Task deleted successfully.');
+        ->assertSessionHas('message', 'Task deleted successfully.');
 });
-
 
 test('user can update task status', function () {
     $this->actingAs($this->user);
@@ -137,5 +137,5 @@ test('user can update task status', function () {
     ]);
 
     $response->assertRedirect(route('dashboard'))
-             ->assertSessionHas('message', 'Task Status updated successfully.');
+        ->assertSessionHas('message', 'Task Status updated successfully.');
 });
