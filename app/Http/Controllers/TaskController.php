@@ -35,7 +35,7 @@ class TaskController extends Controller
             'category_id' => $request->input('category')
         ]);
 
-        Task::create($taskData);
+        $this->taskService->store($taskData);
 
         return redirect()->route('dashboard')
             ->with('message', 'Task created successfully.');

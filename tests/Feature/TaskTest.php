@@ -16,7 +16,7 @@ test('user can create a task', function() {
     $taskPostRequest = [
         'title' => fake()->sentence(),
         'description' => fake()->paragraph(),
-        'status' => 'New', 
+        'status' => 'Completed', 
         'category' => $category->id, 
     ];
 
@@ -28,6 +28,7 @@ test('user can create a task', function() {
         'status' => $taskPostRequest['status'],
         'category_id' => $taskPostRequest['category'],
         'user_id' => $this->user->id,
+        'completed_at' => now()
     ]);
 
     $response->assertRedirect(route('dashboard'))

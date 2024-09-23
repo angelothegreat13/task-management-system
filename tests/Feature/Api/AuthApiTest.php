@@ -29,7 +29,7 @@ test('user can register with valid inputs', function() {
         'password_confirmation' => 'password' 
     ];
 
-    $response = post(route('api.register'), $userData);
+    $response = $this->postJson(route('api.register'), $userData);
 
     $this->assertDatabaseHas('users', [
         'name' => $userData['name'],

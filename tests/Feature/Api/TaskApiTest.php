@@ -44,9 +44,9 @@ test('can filter tasks by category', function () {
     $response->assertStatus(200)
         ->assertJson(fn (AssertableJson $json) =>
             $json->where('success', true)
-                 ->where('message', 'Tasks retrieved successfully.')
-                 ->has('data.tasks', 10) 
-                 ->etc()
+                ->where('message', 'Tasks retrieved successfully.')
+                ->has('data.tasks', 10) 
+                ->etc()
         );
 });
 
@@ -93,3 +93,161 @@ test('can filter tasks by category and status', function () {
         );
 });
 
+test('user can add new task', function() {
+    $category = Category::factory()->create();
+
+    $taskPostRequest = [
+        'title' => fake()->sentence(),
+        'description' => fake()->paragraph(),
+        'status' => 'Completed', 
+        'category' => $category->id, 
+    ];
+
+    $response = $this->postJson(route('tasks.store'), $taskPostRequest);
+    $this->assertDatabaseHas('tasks', [
+        'title' => $taskPostRequest['title'],
+        'description' => $taskPostRequest['description'],
+        'status' => $taskPostRequest['status'],
+        'category_id' => $taskPostRequest['category'],
+        'user_id' => $this->user->id,
+        'completed_at' => now(),
+    ]);
+
+    $response->assertStatus(201)
+        ->assertJsonStructure([
+            'success',
+            'message',
+            'data' => [
+                'id',
+                'title',
+                'description',
+                'status',
+                'user_id',
+                'category_id',
+                'completed_at',
+                'created_at',
+                'updated_at',
+            ]
+        ]);
+});
+
+test('user can see specific task', function () {
+    $task = Task::factory()->create();
+
+    $response = $this->getJson(route('tasks.show', $task->id));
+
+    $response->assertStatus(200);
+    $response->assertJsonStructure([
+        'success',
+        'message',
+        'data' => [
+            'id',
+            'title',
+            'description',
+            'status',
+            'user_id',
+            'category_id',
+            'changed_at',
+            'completed_at',
+            'created_at',
+            'updated_at',
+        ]
+    ]);
+
+    $response->assertJson([
+        'data' => $task->toArray()
+    ]);
+});
+
+test('user can update a task', function() {
+    $oldStatus = 'Under Review';
+    $newStatus = 'Completed';
+    $task = Task::factory()->create([
+        'user_id' => $this->user->id, 
+        'status' => $oldStatus
+    ]);
+
+    $taskRequest = [
+        'title' => 'Updated Task Title',
+        'description' => 'Updated task description.',
+        'category' => $task->category_id,
+        'status' => $newStatus
+    ];
+
+    $response = $this->putJson(route('tasks.update', $task->id), $taskRequest);
+
+    $updatedTask = [
+        'id' => $task->id,
+        'title' => $taskRequest['title'],
+        'description' => $taskRequest['description'],
+        'status' => $newStatus,
+        'changed_at' => now(),
+        'completed_at' => now()
+    ];
+
+    $this->assertDatabaseHas('tasks', $updatedTask);
+
+    $this->assertDatabaseHas('task_status_logs', [
+        'task_id' => $task->id,
+        'old_status' => $oldStatus,
+        'new_status' => $newStatus,
+        'changed_at' => now()
+    ]);
+
+    $response->assertStatus(200)
+        ->assertJsonStructure([
+            'success',
+            'message',
+            'data'
+        ]);
+});
+
+test('user can delete task', function() {
+    $task = Task::factory()->create(['user_id' => $this->user->id]);
+
+    $this->assertDatabaseHas('tasks', [
+        'id' => $task->id,
+    ]);
+
+    $response = $this->deleteJson(route('tasks.destroy', $task->id));
+
+    $this->assertDatabaseMissing('tasks', [
+        'id' => $task->id
+    ]);
+
+    $response->assertStatus(204);
+});
+
+test('user can update task status', function () {
+    $oldStatus = 'Under Review';
+    $newStatus = 'Completed';
+    $task = Task::factory()->create([
+        'user_id' => $this->user->id,
+        'status' => $oldStatus,
+    ]);
+
+    $response = $this->post(route('tasks.updateStatus', $task->id), [
+        'status' => $newStatus,
+    ]);
+
+    $this->assertDatabaseHas('tasks', [
+        'id' => $task->id,
+        'status' => $newStatus,
+        'changed_at' => now(),
+        'completed_at' => now()
+    ]);
+
+    $this->assertDatabaseHas('task_status_logs', [
+        'task_id' => $task->id,
+        'old_status' => $oldStatus, 
+        'new_status' => $newStatus,
+        'changed_at' => now(),
+    ]);
+
+    $response->assertStatus(200)
+        ->assertJsonStructure([
+            'success',
+            'message',
+            'data'
+        ]);
+});

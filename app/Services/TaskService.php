@@ -29,7 +29,13 @@ class TaskService
 
     public function store(array $taskData)
     {
+        if ($taskData['status'] == 'Completed') {
+            $taskData['completed_at'] = now();
+        }
 
+        $task = Task::create($taskData);
+
+        return $task;
     }
     
     public function getStatistics()
@@ -56,7 +62,7 @@ class TaskService
             $taskData['changed_at'] = now();
         }
 
-        return $task->update($taskData);
+        return ($task->update($taskData)) ? $taskData : null;
     }
 
     public function updateStatus(Task $task, string $newStatus)
