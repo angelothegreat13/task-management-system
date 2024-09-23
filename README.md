@@ -6,7 +6,19 @@
 - [Composer] (https://getcomposer.org/download/)
 
 
-## Basic Setup Instruction
+## Installation
+For minimal setup, I used SQLite instead of MySQL. If you want to install and start the app quickly, you do not need to run the migration and seeder since a pre-configured SQLite database is included in the project.
+
+### Steps to Get Started:
+1. Create an `.env` file and copy the contents from `.env.local`.
+2. Run the following commands to install dependencies and start the application:
+   ```bash
+   composer install
+   npm install
+   npm run && npm run dev
+
+
+## Getting Started
 - Clone this repository in your local machine (git clone <repository-url>)
 - Open your terminal and navigate to your project using (cd <localpath>)
 - Create .env file and copy the content of env.local
