@@ -14,8 +14,7 @@ For minimal setup, I used SQLite instead of MySQL. If you want to install and st
 2. Run the following commands to install dependencies and start the application:
    ```bash
    composer install
-   npm install
-   npm run && npm run dev
+   npm install && npm run dev
 
 
 ## Getting Started
