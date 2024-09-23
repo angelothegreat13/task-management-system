@@ -22,7 +22,7 @@ class TaskUpdateRequest extends FormRequest
             'status' => [
                 'required',
                 Rule::in(config('task.status_sequence')),
-                new NextStatus($this->route('task')),
+                new NextStatus($this->route('task')->status),
             ],
         ];
     }

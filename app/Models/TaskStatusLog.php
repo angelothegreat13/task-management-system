@@ -12,6 +12,6 @@ class TaskStatusLog extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'change_at' => 'datetime',    
+        'changed_at' => 'datetime',    
     ];
 }

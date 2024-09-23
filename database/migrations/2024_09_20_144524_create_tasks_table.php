@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('status', ['New', 'In Progress', 'Under Review', 'Completed'])->default('New');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
-            $table->timestamp('change_at')->nullable();
+            $table->timestamp('changed_at')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });

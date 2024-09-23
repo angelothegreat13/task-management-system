@@ -45,28 +45,18 @@ class TaskController extends Controller
     {
         $categories = Category::orderBy('title')->get();
         $statuses = config('task.status_sequence');
-        $nextStatus = $task->getNextStatus();
+        $nextStatus = getNextStatus($task->status);
 
         return view('tasks.edit', compact('task', 'categories', 'statuses', 'nextStatus'));
     }
 
     public function update(Task $task, TaskUpdateRequest $request)
     {
-        $oldStatus = $task->status;
         $taskData = array_merge($request->validated(), [
             'category_id' => $request->input('category')
         ]);
 
-        $task->update($taskData);
-
-        if ($oldStatus !== $task->status) {
-            TaskStatusLog::create([
-                'task_id' => $task->id,
-                'old_status' => $oldStatus,
-                'new_status' => $task->status,
-                'changed_at' => now(), 
-            ]);
-        }
+        $this->taskService->update($task, $taskData);
 
         return redirect()->route('dashboard')
             ->with('message', 'Task updated successfully.');
@@ -74,19 +64,10 @@ class TaskController extends Controller
 
     public function updateStatus(Task $task, TaskUpdateStatusRequest $request)
     {
-        dd($request->all());
-        // dd($request->all());
-        // // $validator = Validator::make($request->all(), $request->rules());
+        $this->taskService->updateStatus($task, $request->status);
 
-        // if ($validator->fails()) {
-        //     dd($validator->errors()); // Dump validation errors
-        // }
-
-        // dd($request->all()); // Dump the request if validation passed
-        // dd($request);
-        // return request()->all();
-        // return $task;
-        // $this->taskService
+        return redirect()->route('dashboard')
+            ->with('message', 'Task Status updated successfully.');
     }
 
     public function destroy(Task $task)

@@ -73,17 +73,17 @@
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 {{ $task->category->title ?? null }}
                             </td>
-                            <td class="px-5 py-5 border-b border-gray-200 bg-white">
-                                @if ($task->getNextStatus())
+                            <td class="px-5 border-b border-gray-200 bg-white">
+                                @if (getNextStatus($task->status))
                                     <form action="{{ route('task.updateStatus', $task->id) }}" method="POST" id="status-form-{{ $task->id }}">
                                         @csrf
-                                        <input type="hidden" name="status" value="{{ $task->getNextStatus() }}">
+                                        <input type="hidden" name="status" value="{{ getNextStatus($task->status) }}">
                                         <button 
                                             type="button" 
                                             class="bg-blue-600 text-white text-sm px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all"
-                                            onclick="confirmChangeStatus({{ $task->id }}, '{{ $task->getNextStatus() }}')"
+                                            onclick="confirmChangeStatus({{ $task->id }}, '{{ getNextStatus($task->status) }}')"
                                         >
-                                            {{ $task->getNextStatus() }}
+                                            {{ getNextStatus($task->status) }}
                                         </button>
                                     </form>
                                 @endif

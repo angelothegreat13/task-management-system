@@ -24,7 +24,7 @@ class TaskFactory extends Factory
             'category_id' => Category::factory(), 
             'status' => fake()->randomElement(config('task.status_sequence')), 
             'user_id' => User::factory(),
-            'change_at' => null,
+            'changed_at' => null,
             'completed_at' => null,
         ];
     }

@@ -7,18 +7,18 @@ use Illuminate\Contracts\Validation\Rule;
 
 class NextStatus implements Rule
 {
-    protected Task $task;
+    protected $currentStatus;
 
-    public function __construct(Task $task)
+    public function __construct($currentStatus)
     {
-        $this->task = $task;
+        $this->currentStatus = $currentStatus;
     }
 
     public function passes($attribute, $value)
     {
-        $nextStatus = $this->task->getNextStatus();
+        $nextStatus = getNextStatus($this->currentStatus);
 
-        return $value === $nextStatus || $value === $this->task->status;
+        return $value === $nextStatus || $value === $this->currentStatus;
     }
 
     public function message()
