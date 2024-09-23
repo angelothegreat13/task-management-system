@@ -10,7 +10,7 @@
 For minimal setup, I used SQLite instead of MySQL. If you want to install and start the app quickly, you do not need to run the migration and seeder since a pre-configured SQLite database is included in the project.
 
 ### Steps to Get Started:
-1. Create an `.env` file and copy the contents from `.env.local`.
+1. Create an `.env` file and copy the contents from `.env.example`.
 2. Run the following commands to install dependencies and start the application:
    ```bash
    composer install
