@@ -119,7 +119,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $tasks->links() }}
+        {{ $tasks->appends(request()->query())->links() }}
     </div>
 </div>
 @push('scripts')

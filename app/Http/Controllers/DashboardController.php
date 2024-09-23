@@ -10,9 +10,16 @@ use App\Services\TaskService;
 
 class DashboardController extends Controller
 {   
-    public function index()
+    protected $taskService;
+
+    public function __construct(TaskService $taskService)
     {
-        $tasks = Task::with('category')->latest()->paginate(5);
+        $this->taskService = $taskService;
+    }
+
+    public function index(Request $request)
+    {
+        $tasks = $this->taskService->getTasks($request->all());
         $categories = Category::orderBy('title')->get();
         $statuses = config('task.status_sequence');
 

@@ -7,7 +7,32 @@ use App\Models\TaskStatusLog;
 
 class TaskService
 {   
+    public function getTasks(array $filters = [], bool $paginate = true)
+    {
+        $query = Task::query()->latest()->with('category');
+
+        if (isset($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+
+        if (isset($filters['category'])) {
+            $query->where('category_id', $filters['category']);
+        }
+
+        if ($paginate) {
+            $perPage = $filters['per_page'] ?? 10;
+            return $query->paginate($perPage);
+        }
+
+        return $query->get();
+    }
+
     public function store(array $taskData)
+    {
+
+    }
+    
+    public function getStatistics()
     {
 
     }

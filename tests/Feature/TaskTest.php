@@ -4,15 +4,13 @@ use App\Models\User;
 use App\Models\Task;
 use App\Models\Category;
 use function Pest\Laravel\{actingAs, post, get, patch, delete};
-use App\Services\TaskService;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
+    $this->actingAs($this->user);
 });
 
 test('user can create a task', function() {
-    $this->actingAs($this->user);
-    
     $category = Category::factory()->create();
 
     $taskPostRequest = [
@@ -37,8 +35,6 @@ test('user can create a task', function() {
 });
 
 test('user can view edit task form', function() {
-    $this->actingAs($this->user);
-
     $task = Task::factory()->create(['user_id' => $this->user->id]);
     $categories = Category::factory()->count(5)->create();
 
@@ -51,8 +47,6 @@ test('user can view edit task form', function() {
 });
 
 test('user can update task', function() {
-    $this->actingAs($this->user);
-
     $oldStatus = 'Under Review';
     $newStatus = 'Completed';
     $task = Task::factory()->create([
@@ -90,8 +84,6 @@ test('user can update task', function() {
 });
 
 test('user can delete task', function() {
-    $this->actingAs($this->user);
-
     $task = Task::factory()->create(['user_id' => $this->user->id]);
 
     $this->assertDatabaseHas('tasks', [
@@ -109,8 +101,6 @@ test('user can delete task', function() {
 });
 
 test('user can update task status', function () {
-    $this->actingAs($this->user);
-
     $oldStatus = 'Under Review';
     $newStatus = 'Completed';
     $task = Task::factory()->create([
