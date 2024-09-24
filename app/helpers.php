@@ -1,6 +1,4 @@
 <?php
-// app/Helpers/helpers.php
-
 if (!function_exists('getNextStatus')) {
 
     /**
