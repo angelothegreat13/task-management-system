@@ -6,11 +6,8 @@
 - [Composer] (https://getcomposer.org/download/)
 
 
-## Installation
-For minimal setup, I used SQLite instead of MySQL. If you want to install and start the app quickly, you do not need to run the migration and seeder since a pre-configured SQLite database is included in the project.
-
-
 ## Getting Started
+- For minimal setup, I used SQLite instead of MySQL. If you want to install and start the app quickly
 - Clone this repository in your local machine (git clone <repository-url>)
 - Open your terminal and navigate to your project using (cd <localpath>)
 - Create .env file and copy the content of env.example
