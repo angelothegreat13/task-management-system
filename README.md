@@ -20,7 +20,7 @@ For minimal setup, I used SQLite instead of MySQL. If you want to install and st
 ## Getting Started
 - Clone this repository in your local machine (git clone <repository-url>)
 - Open your terminal and navigate to your project using (cd <localpath>)
-- Create .env file and copy the content of env.local
+- Create .env file and copy the content of env.example
 - Run the following command 
     - composer install
     - composer dump-autoload
